@@ -6,4 +6,5 @@ __license__ = 'MIT'
 VERSION = __version__
 
 from . import nlp
+from . import pdf
 from . import utils
