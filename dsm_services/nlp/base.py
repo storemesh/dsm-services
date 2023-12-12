@@ -39,9 +39,12 @@ class Base:
         return res.json().get('is_finish')
     
     def _wait_finish_job(self):
+        _status = self._get_job_status()
         for count in tqdm(range(10)):
-            if not self._get_job_status(): time.sleep(5)
-            else: break
+            if not _status: 
+                time.sleep(10)
+                _status = self._get_job_status()
+            time.sleep(0.1)
                 
     def get_result(self):
         job_id = self._job_data.get('job_id', 0)
