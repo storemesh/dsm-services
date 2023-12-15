@@ -18,7 +18,7 @@ class Base:
         res = requests.get(f"{self._service_uri}/keyword-extract/api/")
         utils.handle.check_http_status_code(response=res, extra_text="Can not connect to service")
     
-    def submit_job(self, texts):
+    def submit_job(self, texts, wait_finish=True):
         utils.check.check_type(variable=texts, variableName='texts', dtype=list, child=str)
         res = requests.post(
             f"{self._service_uri}/keyword-extract/api/job/", headers=self._header,
@@ -29,7 +29,7 @@ class Base:
         )
         utils.handle.check_http_status_code(response=res)
         self._job_data = res.json()
-        self._wait_finish_job()
+        if wait_finish: self._wait_finish_job()
         return self._job_data
     
     def _get_job_status(self):

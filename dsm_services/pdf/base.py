@@ -41,7 +41,7 @@ class PDF2Text:
                 _status = self._get_status()
             time.sleep(0.1)
             
-    def upload_file(self, file, name=None, description='-'):
+    def upload_file(self, file, name=None, description='-', wait_finish=True):
         if io.BufferedReader == type(file):
             res = requests.post(f"{self._service_uri}/pdf2text/api/file/", headers=self._header,
                 data={
@@ -53,8 +53,8 @@ class PDF2Text:
                     'file': file
                 }
             )
-        elif type(file) == str and os.path.exists(file):
-            f_name = os.path.basename(file)[:96]
+        elif type(file) == str or os.path.exists(file):
+            f_name = os.path.basename(file)[:96] if name == None else name[:96]
             res = requests.post(f"{self._service_uri}/pdf2text/api/file/", headers=self._header,
                 data={
                     'extract_type': self.extract_type,
@@ -69,7 +69,7 @@ class PDF2Text:
             raise Exception(f"path {file} does not exists or expect `io.BufferedReader` but got {type(file)}")
         utils.handle.check_http_status_code(response=res)
         self._file_data = res.json()
-        self._wait_finish()
+        if wait_finish: self._wait_finish()
         return self._file_data
     
     def fetch_result(self):

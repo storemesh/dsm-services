@@ -15,7 +15,7 @@ with open(os.path.join(os.path.dirname(__file__), 'README.md')) as readme:
 os.chdir(os.path.normpath(os.path.join(os.path.abspath(__file__), os.pardir)))
 
 setup(
-    name='dsmlibrary',
+    name='dsm_services',
     version=get_version(),
     url='https://github.com/storemesh/dsm-services',
     packages=find_packages(),
