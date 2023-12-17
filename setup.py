@@ -37,6 +37,7 @@ setup(
 
     ],
     install_requires=[
-        'requests'
+        'requests',
+        'tqdm'
     ]
 )

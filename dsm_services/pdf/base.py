@@ -7,7 +7,7 @@ import io
 import os
 
 class PDF2Text:
-    def __init__(self, service_uri, api_key, extract_type='Normal'):
+    def __init__(self, service_uri, api_key, extract_type='Normal', _timeout=100):
         """_summary_
 
         Args:
@@ -25,6 +25,7 @@ class PDF2Text:
         if extract_type not in ['Normal', 'Advance-OCR']:
             raise Exception("`extract_type` must be 'Normal' or 'Advance-OCR'")
         self.extract_type = extract_type
+        self._timeout = _timeout
         
         
     def _get_status(self):
@@ -35,7 +36,7 @@ class PDF2Text:
     
     def _wait_finish(self):
         _status = self._get_status()
-        for count in tqdm(range(10)):
+        for count in tqdm(range(self._timeout//10)):
             if not _status: 
                 time.sleep(10)
                 _status = self._get_status()
