@@ -79,53 +79,63 @@ class Analyzer:
         prepair context
 
         Args:
-            data (dict): has keys {'1.1', '1.2', '1.3', '2', '3', '4', '5', '6', '7', '8', '9'}
+            data (dict): has keys {'2.1', '2.2', '2.3', '2.4', '3.1', '3.2', '4.1', '4.2', '5.1', '5.2', '6.1'}
 
         Returns:
             MarkdownText: Markdown display, can call .display() for pretty print
         """
-        require_key = {'1.1', '1.2', '1.3', '2', '3', '4', '5', '6', '7', '8', '9'}
+        require_key = {'2.1', '2.2', '2.3', '2.4', '3.1', '3.2', '4.1', '4.2', '5.1', '5.2', '6.1'}
         diff = require_key - set(data.keys())
         if diff!=set():
             raise Exception(f"Please input key {diff}")
-        data10 = data.get('10')
-        if data10: data10 = f"\n{data10}"
         template = f"""
-# {data.get('1.1')}
 
-## ธุรกิจ
-{data.get('1.2')}
+## Agritourism Activities
+{data.get('2.1')}
 
-## สถานที่ตั้ง
-{data.get('1.3')}
+## Locations
+{data.get('2.2')}
 
-## แนวคิด
-{data.get('2')}
+## Crops and Product
+{data.get('2.3')}
 
-## เอกลักษณ์
-{data.get('3')}
+## Farmers and Producers
+{data.get('2.4')}
 
-## ปัญหา
-{data.get('4')}
+## Tourists
+{data.get('3.1')}
 
-## จุดแข็งจุดอ่อน
-{data.get('5')}
+## Events and Festivals
+{data.get('3.2')}
 
-## สินค้าและบริการ
-{data.get('6')}
+## Accommodations
+{data.get('4.1')}
 
-## กลุ่มลูกค้า
-{data.get('7')}
+## Transportation
+{data.get('4.2')}
 
-## ส่วนร่วมในชุมชน
-{data.get('8')}
+## Local Cuisine
+{data.get('5.1')}
 
-## แผนในอนาคต
-{data.get('9')}
+## Cultural Practices
+{data.get('5.2')}
 
-{f"## เพิ่มเติม {data10}" if '10' in data else ''}
+## Vision (Inspiration) / Concept
+{data.get('6.1')}
 """
         return MarkdownText(template)
+    
+    def context2article(self, context):
+        if type(context)!= MarkdownText:
+            raise Exception("`context` expect type `MarkdownText`")
+        template = f"""
+From this context markdown please create article in thai language
+
+# Context
+{context.text}
+"""
+        md_article = self.llm(prompt=template)
+        return md_article
             
     def upload_context(self, context, district_id):
         """upload context to services
@@ -252,6 +262,6 @@ class Analyzer:
         Returns:
              MarkdownText: markdown context contain llm response
         """
-        res = requests.post(f"{self._service_uri}/training/api/rag/", headers=self._header, json={'prompt': prompt})
+        res = requests.post(f"{self._service_uri}/training/api/rag/llm/", headers=self._header, json={'prompt': prompt})
         utils.check_http_status_code(response=res)
         return MarkdownText(res.json().get('response'))
