@@ -3,6 +3,7 @@ from IPython.display import display, Markdown, IFrame
 import uuid
 import os
 from .. import utils
+from . import utils as analyzer_utils
 
 
 def create_mermaid_html(mermaid_code):
@@ -265,3 +266,9 @@ From this context markdown please create article in thai language
         res = requests.post(f"{self._service_uri}/training/api/rag/llm/", headers=self._header, json={'prompt': prompt})
         utils.check_http_status_code(response=res)
         return MarkdownText(res.json().get('response'))
+    
+    def list_template(self):
+        return list(analyzer_utils.TEMPLATE.keys())
+    
+    def get_template(self, template_name):
+        return analyzer_utils.TEMPLATE.get(template_name, [f"NotFound template {template_name}"])
