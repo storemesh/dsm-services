@@ -8,6 +8,7 @@ class llmResponse:
             setattr(self, k, v)
     def __repr__(self):
         return f"llmResponse (response: {self.response[:100]}...)"
+    
 class LLM:
     def __init__(self, model_name, api_key, llm_uri="https://llm.services.storemesh.com"):
         self.headers = {

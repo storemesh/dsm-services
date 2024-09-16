@@ -48,8 +48,7 @@ class llmChatModel(BaseChatModel):
 
 
         res = self.llm.chat(messages=_msg)
-        utils.check_http_status_code(response=res, extra_text="_generate ")
-        ai_message = AIMessage(content=res.get('message').get('content'))
+        ai_message = AIMessage(content=res.message.get('content'))
         return ChatResult(generations=[ChatGeneration(message=ai_message)])
 
     @property
