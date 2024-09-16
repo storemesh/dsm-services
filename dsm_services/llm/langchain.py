@@ -57,8 +57,8 @@ class llmChatModel(BaseChatModel):
         """
         Return identifying parameters for the model.
         """
-        return {"model": self.model}
+        return {"model": self.model_name}
 
     @property
     def _llm_type(self) -> str:
-        return f"ollama: {self.model}"
+        return f"ollama: {self.model_name}"
