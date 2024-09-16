@@ -30,7 +30,7 @@ class llmChatModel(BaseChatModel):
             'model_name': model_name,
             'api_key': api_key,
         }
-        if llm_uri != None: _params.update({'llm_uri': 'llm_uri'})
+        if llm_uri != None: _params.update({'llm_uri': llm_uri})
         super().__init__(**_params)
         self.llm = base.LLM(**_params)
 
