@@ -10,3 +10,12 @@ model = dsm_services.llm.dsmLLM(
 res = model.generate_content("Hello my name is Bob")
 print(res.response)
 ```
+
+## Langchain Integrations
+```python
+from dsm_services.llm.langchain import llmChatModel
+llm = llmChatModel(model_name="llama3.1", api_key="o94fsLLw.********")
+
+res = llm.invoke("Hello")
+print(res)
+```

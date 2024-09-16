@@ -20,3 +20,4 @@ pip install git+https://github.com/storemesh/dsm-services.git
 - PDF2Text : Convert PDF file to Text [doc](/docs/pdf.md)
 - Analyzer : LLM RAG WIZMAP [doc](/docs/analyzer.md)
 - Monad : Handle error [doc](/docs/monad.md)
+- LLM : Large Language Mode [doc](/docs/llm.md)

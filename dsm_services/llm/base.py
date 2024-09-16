@@ -19,11 +19,17 @@ class LLM:
 
         self._init()
 
+    def __repr__(self):
+        prefix, suffix = self.api_key.split('.')
+        return f"LLM (model {self.model_name}) (key:{prefix}.{'*'*len(suffix)})"
+
     def _init(self):
         res = requests.get(f"{self.uri}/llm/api/llm/", headers=self.headers)
-        utils.check_http_status_code(response=res, extra_text="init fail")
+        utils.check_http_status_code(response=res, extra_text="inllmChatModelit fail")
         if self.model_name not in [elm.get('name') for elm in res.json()]:
             raise Exception(f"`{self.model_name}` not avalible for key `{self.api_key}`")
+        try: self.generate_content(prompt="Hi")
+        except Exception: raise Exception(f"init model {self.model_name} fail!")
 
     def generate_content(self, prompt):
         res = requests.post(
@@ -35,7 +41,14 @@ class LLM:
         )
         utils.check_http_status_code(response=res, extra_text="generate_content ")
         return llmResponse(res.json())
-
-    def __repr__(self):
-        prefix, suffix = self.api_key.split('.')
-        return f"LLM (model {self.model_name}) (key:{prefix}.{'*'*len(suffix)})"
+    
+    def chat(self, messages):
+        res = requests.post(
+            f"{self.uri}/llm/api/llm/{self.model_name}/chat/", 
+            headers=self.headers,
+            json={
+                'messages': messages
+            }
+        )
+        utils.check_http_status_code(response=res, extra_text="chat ")
+        return llmResponse(res.json())
