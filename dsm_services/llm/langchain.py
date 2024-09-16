@@ -24,7 +24,7 @@ class llmChatModel(BaseChatModel):
     model_name: str = "llama3.1"
     api_key: str
     llm_uri: Optional[str]
-    _llm: Optional[object]
+    llm: object = None
 
     def __init__(self, model_name, api_key, llm_uri=None, _llm=None):
         _params = {
@@ -33,7 +33,7 @@ class llmChatModel(BaseChatModel):
         }
         if llm_uri != None: _params.update({'llm_uri': llm_uri})
         super().__init__(**_params)
-        self._llm = base.LLM(**_params)
+        self.llm = base.LLM(**_params)
 
     def _generate(
         self,
@@ -47,7 +47,7 @@ class llmChatModel(BaseChatModel):
         _msg = [langchain2ollama(elm) for elm in messages]
 
 
-        res = self._llm.chat(messages=_msg)
+        res = self.llm.chat(messages=_msg)
         utils.check_http_status_code(response=res, extra_text="_generate ")
         ai_message = AIMessage(content=res.get('message').get('content'))
         return ChatResult(generations=[ChatGeneration(message=ai_message)])
