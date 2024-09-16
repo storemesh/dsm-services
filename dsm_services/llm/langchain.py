@@ -24,9 +24,9 @@ class llmChatModel(BaseChatModel):
     model_name: str = "llama3.1"
     api_key: str
     llm_uri: Optional[str]
-    _llm: Optional[object] = None
+    _llm: Optional[object]
 
-    def __init__(self, model_name, api_key, llm_uri=None):
+    def __init__(self, model_name, api_key, llm_uri=None, _llm=None):
         _params = {
             'model_name': model_name,
             'api_key': api_key,
