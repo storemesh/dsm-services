@@ -28,6 +28,18 @@ res = model.chat(messages=[
 print(res.message)
 ```
 
+- embed
+```python
+import dsm_services
+
+model = dsm_services.llm.dsmLLM(
+    model_name='llama3.1', 
+    api_key="o94fsLLw.********"
+)
+res = model.embed(texts=["test", "hello", "world"])
+print(res.embeddings)
+```
+
 ## Langchain Integrations
 ```python
 from dsm_services.llm.langchain import llmChatModel

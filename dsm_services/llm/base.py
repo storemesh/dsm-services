@@ -53,3 +53,14 @@ class LLM:
         )
         utils.check_http_status_code(response=res, extra_text="chat ")
         return llmResponse(res.json())
+    
+    def embed(self, texts):
+        res = requests.post(
+            f"{self.uri}/llm/api/llm/{self.model_name}/embed/", 
+            headers=self.headers,
+            json={
+                'texts': texts
+            }
+        )
+        utils.check_http_status_code(response=res, extra_text="chat ")
+        return llmResponse(res.json())
