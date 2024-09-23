@@ -4,7 +4,7 @@ Large Language Model using Ollama
 ```python
 import dsm_services
 
-model = dsm_services.llm.dsmLLM(
+model = dsm_services.llm.LLM(
     model_name='llama3.1', 
     api_key="o94fsLLw.********"
 )
@@ -17,7 +17,7 @@ print(res.response)
 ```python
 import dsm_services
 
-model = dsm_services.llm.dsmLLM(
+model = dsm_services.llm.LLM(
     model_name='llama3.1', 
     api_key="o94fsLLw.********"
 )
@@ -32,7 +32,7 @@ print(res.message)
 ```python
 import dsm_services
 
-model = dsm_services.llm.dsmLLM(
+model = dsm_services.llm.LLM(
     model_name='llama3.1', 
     api_key="o94fsLLw.********"
 )
