@@ -7,7 +7,8 @@ class llmResponse:
         for k,v in data.items():
             setattr(self, k, v)
     def __repr__(self):
-        return f"llmResponse (response: {self.response[:100]}...)"
+        text = str(getattr(self, 'response') or getattr(self, 'messages') or getattr(self, 'embeddings'))
+        return f"llmResponse (response: {text[:100]}...)"
     
 class LLM:
     def __init__(self, model_name, api_key, llm_uri="https://llm.services.storemesh.com"):
@@ -62,5 +63,5 @@ class LLM:
                 'texts': texts
             }
         )
-        utils.check_http_status_code(response=res, extra_text="chat ")
+        utils.check_http_status_code(response=res, extra_text="embed ")
         return llmResponse(res.json())
